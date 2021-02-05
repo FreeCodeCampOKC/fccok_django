@@ -1,0 +1,6 @@
+SECRET_KEY=Django Secret Key
+DATABASE_NAME=Database name
+DATABASE_USER=Database user
+DATABASE_PASSWORD=Database password
+DEBUG=False in production
+ADMIN_URL=Admin Url
