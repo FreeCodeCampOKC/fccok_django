@@ -1,3 +1,7 @@
+# VS Code settings
+.vscode/
+# Media files
+media/
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
