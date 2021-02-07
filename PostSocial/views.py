@@ -26,15 +26,11 @@ def Messages(request):
 def AuthorizedUserPost(request):
     if request.method == "POST":
         postform = PostForm(request.POST)
-        socials = dict(postform.data).get("socials_list")
-        print(socials)
-        socials = ",".join(socials)
-        post = Post()
-        post.header = dict(postform.data).get("header")[0]
-        post.content = dict(postform.data).get("content")[0]
-        post.socials = socials
-        post.save()
-        return redirect("posts")
+        print(postform.is_valid())
+        if postform.is_valid():
+            print(postform.cleaned_data["providers"])
+            postform.save()
+            return redirect("posts")
     else:
-        post = PostForm()
-    return render(request, "post_form.html", {"post": post})
+        postform = PostForm()
+    return render(request, "post_form.html", {"post": postform})

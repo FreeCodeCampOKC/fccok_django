@@ -1,3 +1,5 @@
+from allauth.socialaccount import providers
+from django.core.validators import validate_comma_separated_integer_list
 from django.db import models
 from django.contrib.auth.models import User
 from django.urls import reverse
@@ -10,12 +12,20 @@ from django.utils.text import slugify
 
 
 class Post(TimeStampedModel):
+
     header = models.CharField(_("header"), max_length=100, blank=True)
     content = models.CharField(_("Content"), max_length=500)
     publish_on = models.DateTimeField(_("Publish Date"), null=True, blank=True)
     published = models.BooleanField(default=False)
     image = models.ImageField(null=True, blank=True)
-    socials = models.TextField(_("socials"))  # comma separeted socials?
+    socials = models.TextField(_("Socials"))  # comma separated providers
+    providers = models.CharField(
+        _("Providers"),
+        default="",
+        blank=False,
+        max_length=50,
+        validators=[validate_comma_separated_integer_list],
+    )
     created_by = models.ForeignKey(
         "auth.User",
         on_delete=models.SET_NULL,
