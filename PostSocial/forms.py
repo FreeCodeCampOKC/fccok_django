@@ -7,8 +7,8 @@ from allauth.socialaccount import providers
 
 
 class PostForm(ModelForm):
-    # choices = ((str(i), v[0]) for i, v in enumerate(providers.registry.as_choices()))
-    choices = ((1, "Twitter"), (2, "LinkedIn"), (3, "Github"))
+    choices = providers.registry.as_choices()
+    # choices = (("twitter", "Twitter"), ("linkedin", "LinkedIn"), ("github", "Github"))
     providers = MultipleChoiceField(
         widget=forms.SelectMultiple, choices=choices, initial="1"
     )

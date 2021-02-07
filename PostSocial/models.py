@@ -19,12 +19,12 @@ class Post(TimeStampedModel):
     published = models.BooleanField(default=False)
     image = models.ImageField(null=True, blank=True)
     socials = models.TextField(_("Socials"))  # comma separated providers
-    providers = models.CharField(
+    providers = models.TextField(
         _("Providers"),
         default="",
         blank=False,
         max_length=50,
-        validators=[validate_comma_separated_integer_list],
+        # validators=[validate_comma_separated_integer_list],
     )
     created_by = models.ForeignKey(
         "auth.User",
