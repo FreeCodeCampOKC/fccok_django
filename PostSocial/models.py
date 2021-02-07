@@ -18,7 +18,6 @@ class Post(TimeStampedModel):
     publish_on = models.DateTimeField(_("Publish Date"), null=True, blank=True)
     published = models.BooleanField(default=False)
     image = models.ImageField(null=True, blank=True)
-    socials = models.TextField(_("Socials"))  # comma separated providers
     providers = models.TextField(
         _("Providers"),
         default="",
