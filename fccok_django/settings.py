@@ -11,6 +11,8 @@ https://docs.djangoproject.com/en/2.2/ref/settings/
 """
 
 import os
+import django_heroku
+import dj_database_url
 from dotenv import load_dotenv
 from pathlib import Path
 
@@ -41,6 +43,7 @@ SECURE_SSL_REDIRECT = True
 # Application definition
 
 INSTALLED_APPS = [
+    "whitenoise.runserver_nostatic",
     "PostSocial",
     "django_extensions",
     "humanize",
@@ -69,7 +72,7 @@ INSTALLED_APPS = [
     "allauth.socialaccount.providers.linkedin",
 ]
 SITE_ID = 1
-# ACCOUNT_DEFAULT_HTTP_PROTOCOL = "https"
+ACCOUNT_DEFAULT_HTTP_PROTOCOL = "https"
 LOGIN_REDIRECT_URL = "/"
 
 CKEDITOR_UPLOAD_PATH = "uploads/"  # saves files uploaded inside media folder
@@ -103,6 +106,7 @@ CKEDITOR_CONFIGS = {
 
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
+    "whitenoise.middleware.WhiteNoiseMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
     "django.middleware.common.CommonMiddleware",
     "django.middleware.csrf.CsrfViewMiddleware",
@@ -157,8 +161,10 @@ DATABASES = {
         "PORT": "",
     }
 }
-
-
+db_from_env = dj_database_url.config(conn_max_age=500)
+DATABASES["default"].update(db_from_env)
+WHITENOISE_USE_FINDERS = True
+STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
 # Password validation
 # https://docs.djangoproject.com/en/2.2/ref/settings/#auth-password-validators
 
@@ -208,3 +214,5 @@ REST_FRAMEWORK = {
         "rest_framework.permissions.DjangoModelPermissionsOrAnonReadOnly"
     ]
 }
+
+django_heroku.settings(locals())
