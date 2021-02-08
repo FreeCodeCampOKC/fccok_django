@@ -1,4 +1,4 @@
-"""ffcok_django URL Configuration
+"""fccok_django URL Configuration
 
 The `urlpatterns` list routes URLs to views. For more information please see:
     https://docs.djangoproject.com/en/2.2/topics/http/urls/
@@ -21,6 +21,6 @@ import os
 admin_url = os.getenv("ADMIN_URL")
 urlpatterns = [
     path(f"{admin_url}/", admin.site.urls),
-    path("postsocial/", include("PostSocial.urls")),
+    path("", include("PostSocial.urls")),
     path("accounts/", include("django.contrib.auth.urls")),
 ]
