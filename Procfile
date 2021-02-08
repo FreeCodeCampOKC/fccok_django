@@ -1,0 +1,1 @@
+web: gunicorn fccok_django.wsgi --log-file -
