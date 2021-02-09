@@ -22,5 +22,5 @@ admin_url = os.getenv("ADMIN_URL")
 urlpatterns = [
     path(f"{admin_url}/", admin.site.urls),
     path("", include("PostSocial.urls")),
-    path("accounts/", include("django.contrib.auth.urls")),
+    path("accounts/", include("allauth.urls")),
 ]
