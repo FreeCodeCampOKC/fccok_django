@@ -23,5 +23,5 @@ urlpatterns = [
     path(f"{admin_url}/logout", views.logout),
     path(f"{admin_url}/", admin.site.urls),
     path("", include("PostSocial.urls")),
-    path("accounts/", include("django.contrib.auth.urls")),
+    path("accounts/", include("allauth.urls")),
 ]
