@@ -2,11 +2,18 @@ from django.http.response import HttpResponse
 from django.shortcuts import redirect, render
 from django.contrib.auth.decorators import login_required, user_passes_test
 from django.contrib import messages
+from django.urls import reverse
+from django.contrib.auth import logout
 from .models import Post
 
 from .forms import PostForm
 
-# Create your views here.
+
+def logout(request):
+    logout(request)
+    return redirect("PostSocial:posts")
+
+
 @login_required
 @user_passes_test(lambda user: user.is_staff)
 def Posts(request):
@@ -30,7 +37,7 @@ def AuthorizedUserPost(request):
         if postform.is_valid():
             print(postform.cleaned_data["providers"])
             postform.save()
-            return redirect("posts")
+            return redirect(reverse("PostSocial:posts"))
     else:
         postform = PostForm()
     return render(request, "post_form.html", {"post": postform})

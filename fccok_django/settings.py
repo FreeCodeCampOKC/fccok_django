@@ -72,9 +72,13 @@ INSTALLED_APPS = [
     "allauth.socialaccount.providers.linkedin",
 ]
 SITE_ID = 1
+# allauth configs
 ACCOUNT_DEFAULT_HTTP_PROTOCOL = "https"
 LOGIN_REDIRECT_URL = "/"
-
+ACCOUNT_LOGOUT_REDIRECT_URL = "/accounts/login/"
+ACCOUNT_LOGIN_ATTEMPTS_LIMIT = 5
+ACCOUNT_LOGIN_ATTEMPTS_TIMEOUT = 900  # 15 min
+# ckeditor configs
 CKEDITOR_UPLOAD_PATH = "uploads/"  # saves files uploaded inside media folder
 CKEDITOR_CONFIGS = {
     "default": {
@@ -161,6 +165,7 @@ DATABASES = {
         "PORT": "",
     }
 }
+# heroku configs
 db_from_env = dj_database_url.config(conn_max_age=500)
 DATABASES["default"].update(db_from_env)
 WHITENOISE_USE_FINDERS = True

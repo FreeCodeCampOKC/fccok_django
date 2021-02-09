@@ -15,11 +15,12 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
-
+from PostSocial import views
 import os
 
 admin_url = os.getenv("ADMIN_URL")
 urlpatterns = [
+    path(f"{admin_url}/logout", views.logout),
     path(f"{admin_url}/", admin.site.urls),
     path("", include("PostSocial.urls")),
     path("accounts/", include("django.contrib.auth.urls")),
