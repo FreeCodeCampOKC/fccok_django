@@ -19,7 +19,7 @@ from .forms import PostForm
 
 def logout(request):
     logout(request)
-    return redirect("PostSocial:posts")
+    return redirect(reverse("PostSocial:posts"))
 
 
 @login_required
