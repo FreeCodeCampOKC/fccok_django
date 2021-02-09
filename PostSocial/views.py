@@ -5,6 +5,12 @@ from django.contrib.auth.decorators import login_required, user_passes_test
 from django.contrib import messages
 from .models import Post
 import requests
+import os
+from dotenv import load_dotenv
+from pathlib import Path
+
+env_path = Path(".") / ".env"
+load_dotenv(env_path)
 
 from .forms import PostForm
 
@@ -48,9 +54,9 @@ def LinkedInCallback(request):
     """
 
     code = request.GET.get("code")
-    CLIENT_ID = "78hfehy7xkc0ow"
-    CLIENT_SECRET = "i2hQdErb1Sgv0Wlx"
-    REDIRECT_URL = "http://localhost:8000/callback"
+    CLIENT_ID = os.getenv("LINKEDIN_CLIENT_ID")
+    CLIENT_SECRET = os.getenv("LINKEDIN_CLIENT_SECRET")
+    REDIRECT_URL = os.getenv("LINKEDIN_REDIRECT_URL")
 
     if code:
         print("authorization code: " + code)
