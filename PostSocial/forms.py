@@ -10,7 +10,9 @@ class PostForm(ModelForm):
     choices = providers.registry.as_choices()
     # choices = (("twitter", "Twitter"), ("linkedin", "LinkedIn"), ("github", "Github"))
     providers = MultipleChoiceField(
-        widget=forms.SelectMultiple, choices=choices, initial="1"
+        widget=forms.SelectMultiple(attrs={"class": "form-select"}),
+        choices=choices,
+        initial="1",
     )
 
     def clean_providers(self):
@@ -19,3 +21,9 @@ class PostForm(ModelForm):
     class Meta:
         model = Post
         fields = ["header", "content", "publish_on", "providers"]
+        widgets = {
+            "header": forms.TextInput(attrs={"class": "form-control"}),
+            "content": forms.TextInput(attrs={"class": "form-control"}),
+            "publish_on": forms.DateInput(attrs={"class": "form-control"}),
+            "providers": forms.SelectMultiple(attrs={"class": "form-select"}),
+        }

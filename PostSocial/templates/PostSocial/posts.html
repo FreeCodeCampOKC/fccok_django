@@ -1,15 +1,48 @@
-{% extends "base.html" %} {% block title %}
+{% extends "base.html" %}
+{% block title %}
 <title>Posts</title>
-{% endblock %} {% block sidenav%}
+{% endblock %} 
+{% block sidenav%}
 <a href="{% url 'account_logout' %}">Logout</a>
-{% endblock%} {% block content %} {% if messages %}
-<ul class="messages" style="background-color: #ccc">
+{% endblock%}
+{% block scripts %}
+<script>
+    var toastElList = [].slice.call(document.querySelectorAll('.toast'));
+    var toastList = toastElList.map(function (toastEl) {
+    return new bootstrap.Toast(toastEl, option);
+    })
+    toastList.map(function(toastEl){
+        toastEl.show();
+    });
+</script>
+{% endblock %}
+{% block content %}
+{% if messages %}
+<div class="toast-container">
     {% for message in messages %}
-    <li {% if message.tags %} class="{{ message.tags }}" {% endif %}>
-        {{ message }}
-    </li>
+    <div class="toast" role="alert" aria-live="assertive" aria-atomic="true">
+        <div class="toast-header">
+        <img src="..." class="rounded me-2" alt="...">
+        <strong class="me-auto">Bootstrap</strong>
+        <small class="text-muted">just now</small>
+        <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+        </div>
+        <div class="toast-body">
+            <p {% if message.tags %} class="{{ message.tags }}" {% endif %}>
+                {{ message }}
+            </p>
+        </div>
+    </div>
     {% endfor %}
-</ul>
-{% endif %} {% for post in posts %}
-<div>{{post.header}} {{post.content}} {{post.publish_on}}</div>
-{% endfor %} {%endblock %}
+</div>
+{% endif %}
+<div class="container">
+{% for post in posts %}
+    <div>
+        {{post.header}}
+        {{post.content}}
+        {{post.publish_on}}
+    </div>
+{% endfor %}
+</div>
+{%endblock %}

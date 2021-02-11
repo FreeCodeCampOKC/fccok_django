@@ -19,6 +19,7 @@ from .forms import PostForm
 
 def logout(request):
     logout(request)
+    messages.add_message(request, messages.INFO, f"You have been logged out")
     return redirect(reverse("PostSocial:posts"))
 
 

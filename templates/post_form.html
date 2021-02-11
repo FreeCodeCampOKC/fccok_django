@@ -5,9 +5,28 @@
 {% endblock %}
 
 {% block content %}
-<form method="POST" action="">
-{% csrf_token %}
-{{post.as_p}}
-<button type="submit">Submit</button>
-</form>
+<div class="container">
+    <div class="row">
+        <form method="POST" action="" role="form">
+        {% csrf_token %}
+        {% if post.subject.errors %}
+            <ol role="alertdialog">
+                {% for error in post.subject.errors%}
+                    <li role="alert"><strong> {{error|escape}}</strong></li>
+                {% endfor %}
+            </ol>
+        {% endif %}
+        {% for field in post %}
+        <div class="fieldWrapper form-group" aria-required={% if field.field.required %}"true"{%else%}"false"{%endif%}>
+            {{ field.label_tag }}{% if field.field.required %}<span class="required">*</span>{%endif%}
+            {{ field }}
+            {% if field.help_text %}
+            <p class="help">{{ field.help_text|safe}}</p>
+            {% endif%}
+        </div>
+        {% endfor %}
+        <input type="submit" class="btn btn-primary mb-2" value="Submit" />
+        </form>
+    </div>
+</div>
 {% endblock%}
